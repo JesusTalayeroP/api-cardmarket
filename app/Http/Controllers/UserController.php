@@ -91,4 +91,29 @@ class UserController extends Controller
 
     	return $response;
 	}
+
+	public function reset_password(Request $request) {
+		$response = "";
+
+    	$data = $request->getContent();
+
+    	$data = json_decode($data);
+
+    	$user = User::where('email', $data->email)->get()->first();
+
+    	if($user){
+    		$new_password = Str::random(15);
+
+    		$user->password = Hash::make($new_password);
+
+    		 try{
+    			$user->save();
+				$response = "Tu nueva contraseña es: ".$new_password;
+			}catch(\Exception $e){
+				$response = $e->getMessage();
+			}
+    	}else $response = "El usuario introducido no existe";
+
+    	return $response;
+	}
 }	
