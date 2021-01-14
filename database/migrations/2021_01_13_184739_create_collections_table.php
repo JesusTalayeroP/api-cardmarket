@@ -19,9 +19,9 @@ class CreateCollectionsTable extends Migration
 
             $table->string('name', 100)->unique();
 
-            $table->string('icon');
+            $table->string('icon')->nullable();
 
-            $table->date('release_date');
+            $table->date('release_date')->nullable();
 
             $table->timestamps();
         });
