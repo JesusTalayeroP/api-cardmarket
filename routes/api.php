@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Middleware\EnsureTokenIsValid;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('cards')->group(function () {
-	Route::post('/create',[CardController::class, 'create_card']);
+	Route::post('/create',[CardController::class, 'create_card'])->middleware(EnsureTokenIsValid::class);
 	Route::post('/update/{id}',[CardController::class, 'update_card']);
 	Route::post('/add_card',[CardController::class, 'add_card_to_collection']);
 
