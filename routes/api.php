@@ -33,11 +33,14 @@ Route::prefix('users')->group(function () {
 Route::prefix('cards')->group(function () {
 	Route::post('/create',[CardController::class, 'create_card']);
 	Route::post('/update/{id}',[CardController::class, 'update_card']);
+	Route::post('/add_card',[CardController::class, 'add_card_to_collection']);
 
 });
 
 Route::prefix('collections')->group(function () {
 	Route::post('/create',[CollectionController::class, 'create_collection']);
 	Route::post('/update/{id}',[CollectionController::class, 'update_collection']);
+
+	
 
 });

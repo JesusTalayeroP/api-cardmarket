@@ -103,4 +103,40 @@ class CardController extends Controller
 		// Enviar respuesta
 		return response($response);
 	}
+
+
+	public function add_card_to_collection(Request $request){
+
+		$response = "";
+		//Leer el contenido de la petición
+		$data = $request->getContent();
+
+		//Decodificar el json
+		$data = json_decode($data);
+
+		//Buscar el equipo por su id
+		$card = Card::find($data->card);
+		// Buscar el soldado que lidera el equipo por su id
+		$collection = Collection::find($data->collection);
+
+		//Si hay un json válido, añadir el soldado como lider del equipo
+		if($data && $card && $collection){
+
+			$cardCollection = new CardCollection();
+			$cardCollection->card_id = $data->card;
+			$cardCollection->collection_id = $data->collection;
+			
+			try{
+				// Guardar el equipo
+				$cardCollection->save();
+				$response = "OK";
+			}catch(\Exception $e){
+				$response = $e->getMessage();
+			}
+		} else {
+			$response = "Los datos introducidos son incorrectos";
+		}
+		// Enviar respuesta
+		return response($response);
+	}
 }
