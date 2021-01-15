@@ -11,6 +11,6 @@ class Card extends Model
 
     public function collections()
     {
-        return $this->belongsToMany(Collection::class);
+        return $this->belongsToMany(Collection::class, 'card_collections');
     }
 }

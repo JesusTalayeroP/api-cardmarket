@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Card;
 use App\Models\Collection;
+use App\Models\CardCollection;
 
 class CardController extends Controller
 {
@@ -27,10 +28,17 @@ class CardController extends Controller
     		
 			try{
 				$card->save();
+				$card_id = $card->id;
 				$response = "OK";
 			}catch(\Exception $e){
 				$response = $e->getMessage();
-			}			
+			}
+
+			$cardCollection = new CardCollection();
+			$cardCollection->card_id = $card->id;
+			$cardCollection->collection_id = $collection->id;		
+			$cardCollection->save();
+
     	} elseif($data){
 
     		$card = new Card();
@@ -42,14 +50,59 @@ class CardController extends Controller
 
     		try{
 				$card->save();
+				$card_id = $card->id;
 				$collection->save();
+				$collection_id = $collection->id;
 				$response = "OK";
 			}catch(\Exception $e){
 				$response = $e->getMessage();
 			}
 
+			$cardCollection = new CardCollection();
+			$cardCollection->card_id = $card->id;
+			$cardCollection->collection_id = $collection->id;
+			$cardCollection->save();
+
     	} else $response = "Datos incorrectos o la colección no existe";
 
     	return $response;
     }
+
+
+    public function update_card(Request $request, $id){
+
+		$response = "";
+
+		//Buscar el equipo por su id
+		$card = Card::find($id);
+		// Si encuentra el equipo
+		if($card){
+
+			//Leer el contenido de la petición
+			$data = $request->getContent();
+
+			//Decodificar el json
+			$data = json_decode($data);
+
+			//Si hay un json válido, buscar el equipo
+			if($data){
+			
+				// Actualizar el nombre del equipo
+				$card->name = (isset($data->name) ? $data->name : $card->name);
+				$card->description = (isset($data->description) ? $data->description : $card->description);
+
+				try{
+					// Guardar el equipo actualizado en la base de datos
+					$card->save();
+					$response = "OK";
+				}catch(\Exception $e){
+					$response = $e->getMessage();
+				}
+			}
+		}else{
+			$response = "No card";
+		}
+		// Enviar respuesta
+		return response($response);
+	}
 }

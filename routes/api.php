@@ -31,5 +31,6 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('cards')->group(function () {
 	Route::post('/create',[CardController::class, 'create_card']);
+	Route::post('/update/{id}',[CardController::class, 'update_card']);
 
 });
