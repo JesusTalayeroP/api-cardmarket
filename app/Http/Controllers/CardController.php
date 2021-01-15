@@ -50,9 +50,7 @@ class CardController extends Controller
 
     		try{
 				$card->save();
-				$card_id = $card->id;
 				$collection->save();
-				$collection_id = $collection->id;
 				$response = "OK";
 			}catch(\Exception $e){
 				$response = $e->getMessage();
@@ -63,7 +61,7 @@ class CardController extends Controller
 			$cardCollection->collection_id = $collection->id;
 			$cardCollection->save();
 
-    	} else $response = "Datos incorrectos o la colección no existe";
+    	} else $response = "Datos incorrectos";
 
     	return $response;
     }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\CollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,11 @@ Route::prefix('users')->group(function () {
 Route::prefix('cards')->group(function () {
 	Route::post('/create',[CardController::class, 'create_card']);
 	Route::post('/update/{id}',[CardController::class, 'update_card']);
+
+});
+
+Route::prefix('collections')->group(function () {
+	Route::post('/create',[CollectionController::class, 'create_collection']);
+	Route::post('/update/{id}',[CollectionController::class, 'update_collection']);
 
 });
