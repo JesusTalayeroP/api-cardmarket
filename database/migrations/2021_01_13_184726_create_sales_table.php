@@ -23,9 +23,8 @@ class CreateSalesTable extends Migration
 
             $table->timestamps();
 
-            $table->foreignId('card_collection_id')->constrained();
-
             $table->foreignId('user_id')->constrained();
+
         });
     }
 

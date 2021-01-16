@@ -49,9 +49,7 @@ class CollectionController extends Controller
 
     		try{
 				$card->save();
-				$card_id = $card->id;
 				$collection->save();
-				$collection_id = $collection->id;
 				$response = "OK";
 			}catch(\Exception $e){
 				$response = $e->getMessage();

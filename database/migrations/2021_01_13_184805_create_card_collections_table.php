@@ -23,6 +23,12 @@ class CreateCardCollectionsTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::table('sales', function(Blueprint $table) {
+
+            $table->foreignId('card_collection_id')->constrained();
+
+        });
     }
 
     /**
@@ -32,6 +38,12 @@ class CreateCardCollectionsTable extends Migration
      */
     public function down()
     {
+
+        Schema::table('sales', function(Blueprint $table) {
+            $table->dropForeign(['card_collection_id']);
+            $table->dropColumn('card_collection_id');
+        });
+
         Schema::dropIfExists('card_collections');
     }
 }

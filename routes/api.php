@@ -48,6 +48,7 @@ Route::prefix('collections')->group(function () {
 Route::prefix('sales')->group(function () {
 	Route::post('/create',[SaleController::class, 'create_sale'])->middleware(EnsureTokenIsUserOrProfessional::class);
 	Route::post('/search',[SaleController::class, 'search_card'])->middleware(EnsureTokenIsUserOrProfessional::class);
+	Route::post('/buy',[SaleController::class, 'buy_card']);
 	
 
 });
