@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('users')->group(function () {
 	Route::post('/signup',[UserController::class, 'signup_user']);
-	Route::post('/signup_admin',[UserController::class, 'signup_admin']);
+	Route::post('/create_admin/{id}',[UserController::class, 'create_admin'])->middleware(EnsureTokenIsValid::class);
 	Route::post('/login',[UserController::class, 'login_user']);
 	Route::post('/reset_password',[UserController::class, 'reset_password']);
 	

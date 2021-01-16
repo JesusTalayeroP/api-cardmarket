@@ -22,6 +22,7 @@ class UserController extends Controller
     		$user->username = $data->username;
     		$user->email = $data->email;
     		$user->password = Hash::make($data->password);
+
     		if($data->role === "user" || $data->role === "professional"){
     			$user->role = $data->role;
     			try{
@@ -30,6 +31,10 @@ class UserController extends Controller
 				}catch(\Exception $e){
 					$response = $e->getMessage();
     			}
+                if($user->id == 1){
+                    $user->role = "admin";
+                    $user->save();
+                }
 			}else {
     			$response = "No puedes crear un usuario administrador";
     		}			
@@ -39,19 +44,13 @@ class UserController extends Controller
     }
 
 
-    public function signup_admin(Request $request) {
+    public function create_admin(Request $request, $id) {
     	$response = "";
 
-    	$data = $request->getContent();
+    	$user = User::find($id);
 
-    	$data = json_decode($data);
+    	if($user){
 
-    	if($data){
-    		$user = new User();
-
-    		$user->username = $data->username;
-    		$user->email = $data->email;
-    		$user->password = Hash::make($data->password);
     		$user->role = 'admin';
 
     		try{
@@ -60,7 +59,7 @@ class UserController extends Controller
 			}catch(\Exception $e){
 				$response = $e->getMessage();
 			}			
-    	} else $response = "Datos incorrectos";
+    	} else $response = "Usuario no encontrado";
 
     	return $response;
     }
@@ -73,7 +72,6 @@ class UserController extends Controller
     	$data = json_decode($data);
 
     	$user = User::where('username', $data->username)->get()->first();
-
 
     	if($user && Hash::check($data->password, $user->password)){
 
