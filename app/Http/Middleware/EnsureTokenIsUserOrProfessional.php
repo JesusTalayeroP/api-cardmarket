@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class EnsureTokenIsValid
+class EnsureTokenIsUserOrProfessional
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,6 @@ class EnsureTokenIsValid
      */
     public function handle(Request $request, Closure $next)
     {
-
         $data = $request->getContent();
 
         $data = json_decode($data);
@@ -27,7 +26,7 @@ class EnsureTokenIsValid
             $user = User::where('api_token', $data->api_token)->get()->first();
 
             if($user){
-                if($user->role == 'admin'){
+                if($user->role == 'user' || $user->role == 'professional'){
 
                     return $next($request);
 
@@ -36,7 +35,5 @@ class EnsureTokenIsValid
                 } 
             }else abort(403, "el token no es correcto");
         }else abort(403, "necesitas loguear para hacer esto");
-
-        
     }
 }

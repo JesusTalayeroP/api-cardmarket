@@ -13,4 +13,9 @@ class Card extends Model
     {
         return $this->belongsToMany(Collection::class, 'card_collections');
     }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }
