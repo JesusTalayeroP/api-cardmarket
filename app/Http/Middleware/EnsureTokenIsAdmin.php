@@ -17,20 +17,20 @@ class EnsureTokenIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-
+        //Leer el contenido de la petición
         $data = $request->getContent();
-
+        //Decodificar el json
         $data = json_decode($data);
-
-        if($data){
-
+        //Si hay un json válido, comprobar el token
+        if($data){  
+            // Buscar el usuario por el token
             $user = User::where('api_token', $data->api_token)->get()->first();
-
+            // Si encuantra al usuario
             if($user){
+                // Comprobar si su rol es admin
                 if($user->role == 'admin'){
-
                     return $next($request);
-
+                // Si no, enviar un error 403    
                 }else{
                     abort(403, "no authorized");
                 } 
