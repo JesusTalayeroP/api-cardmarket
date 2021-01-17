@@ -11,12 +11,8 @@ use App\Models\User;
 
 class SaleController extends Controller
 {
-    public function search_card(Request $request){
+    public function search_card(Request $request, $card_name){
     	$response = "";
-
-    	$data = $request->getContent();
-
-    	$data = json_decode($data);
 
     	$cardsCollection = CardCollection::all();
 
@@ -26,7 +22,7 @@ class SaleController extends Controller
     		for ($i=0; $i < count($cardsCollection); $i++) { 
     			$card = Card::find($cardsCollection[$i]->card_id);
 
-    			if(strcasecmp($card->name, $data->card) == 0){
+    			if(strcasecmp($card->name, $card_name) == 0){
     				$collection = Collection::find($cardsCollection[$i]->collection_id);
     				$response [] = [
     				"id" => $cardsCollection[$i]->id,
@@ -73,12 +69,8 @@ class SaleController extends Controller
     	return $response;
     }
 
-    public function buy_card(Request $request){
+    public function buy_card(Request $request, $card_name){
     	$response = "";
-
-    	$data = $request->getContent();
-
-    	$data = json_decode($data);
 
     	$sales = Sale::orderBy('price', 'ASC')->get();
 
@@ -89,7 +81,7 @@ class SaleController extends Controller
     			$cardCollection = CardCollection::where('id', $sales[$i]->card_collection_id)->get()->first();
 				$card = Card::find($cardCollection->card_id);
     			
-    			if(strcasecmp($card->name, $data->card) == 0){
+    			if(strcasecmp($card->name, $card_name) == 0){
     				$collection = Collection::find($cardCollection->collection_id);
     				$user = User::find($sales[$i]->user_id);
     				$response [] = [
