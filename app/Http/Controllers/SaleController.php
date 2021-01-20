@@ -9,6 +9,9 @@ use App\Models\CardCollection;
 use App\Models\Collection;
 use App\Models\User;
 
+use App\Http\Helpers\MyJWT;
+use \Firebase\JWT\JWT;
+
 class SaleController extends Controller
 {
 	/** POST
@@ -22,6 +25,12 @@ class SaleController extends Controller
 	 */
     public function search_card(Request $request, $card_name){
     	$response = "";
+
+        $key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
     	// Buscar todas las cartas que pertenecen a una collection
     	$cardsCollection = CardCollection::all();
 
@@ -69,8 +78,12 @@ class SaleController extends Controller
     	$data = $request->getContent();
     	//Decodificar el json
     	$data = json_decode($data);
-    	// Buscar al usuario por id
-    	$user = User::where('api_token', $data->api_token)->get()->first();
+
+        $key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
     	//Si hay un json válido, crear la venta
     	if($data){
     		$sale = new Sale();
@@ -78,7 +91,7 @@ class SaleController extends Controller
     		$sale->quantity = $data->quantity;
     		$sale->price = $data->price;
     		$sale->card_collection_id = $data->card_id;
-    		$sale->user_id = $user->id;
+    		$sale->user_id = $decoded->id;
 
 			try{
 				$sale->save();

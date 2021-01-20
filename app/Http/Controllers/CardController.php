@@ -7,6 +7,9 @@ use App\Models\Card;
 use App\Models\Collection;
 use App\Models\CardCollection;
 
+use App\Http\Helpers\MyJWT;
+use \Firebase\JWT\JWT;
+
 class CardController extends Controller
 {
 	/** POST
@@ -25,6 +28,12 @@ class CardController extends Controller
     	$data = $request->getContent();
     	//Decodificar el json
     	$data = json_decode($data);
+
+    	$key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
     	// Buscar la collection
     	$collection = Collection::where('name', $data->collection)->get()->first();
     	// Si existe la collection
@@ -89,6 +98,12 @@ class CardController extends Controller
 		$response = "";
 		//Buscar la carta por su id
 		$card = Card::find($id);
+
+		$key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
 		// Si encuentra la carta
 		if($card){
 			//Leer el contenido de la petición
@@ -132,6 +147,12 @@ class CardController extends Controller
 		$data = $request->getContent();
 		//Decodificar el json
 		$data = json_decode($data);
+
+		$key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
 		//Buscar la carta por su id
 		$card = Card::find($data->card);
 		// Buscar la coleccion a la que pertenece la carta por su id

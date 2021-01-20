@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use App\Http\Helpers\MyJWT;
+use \Firebase\JWT\JWT;
+
 class UserController extends Controller
 {
     /** POST
@@ -64,6 +67,12 @@ class UserController extends Controller
      */
     public function create_admin(Request $request, $id) {
     	$response = "";
+
+        $key = MyJWT::getKey();
+        //Decodificar el token
+        $headers = getallheaders();
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+
         // Buscar el usuario por id
     	$user = User::find($id);
         // Si lo encuentra
@@ -99,15 +108,20 @@ class UserController extends Controller
     	$data = json_decode($data);
         // Buscar el usuario por su username
     	$user = User::where('username', $data->username)->get()->first();
+
+        $payload = MyJWT::generatePayload($user);
+        $key = MyJWT::getKey();
+
+        $jwt = JWT::encode($payload, $key);
+
         // Si existe y la contraseña coincide
     	if($user && Hash::check($data->password, $user->password)){
             // Crear un token aleatorio y guardarlo
-			$token = Str::random(60);
-			$user->api_token = $token;
+			$user->api_token = $jwt;
 
 			try{
     			$user->save();
-				$response = "OK";
+				$response = "OK. Token: ".$jwt;
 			}catch(\Exception $e){
 				$response = $e->getMessage();
 			}
