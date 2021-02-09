@@ -14,7 +14,7 @@ use \Firebase\JWT\JWT;
 
 class SaleController extends Controller
 {
-	/** POST
+	/** GET
 	 * Buscar cartas con sales/search/{card_name}
 	 *
 	 * Se introduce por url el nombre de la carta que queremos buscar, y enviamos en la request

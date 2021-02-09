@@ -25,7 +25,7 @@ class EnsureTokenIsUserOrProfessional
 
         $headers = getallheaders();
 
-        $decoded = JWT::decode($headers['api_token1'], $key, array('HS256')); 
+        $decoded = JWT::decode($headers['api_token'], $key, array('HS256')); 
 
         if($decoded){  
             
