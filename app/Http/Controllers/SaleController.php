@@ -107,7 +107,7 @@ class SaleController extends Controller
 	/** GET
 	 * Buscar una carta a la venta con sales/buy/{card_name}
 	 *
-	 * Se introduce por url el nombre de la carta que se quiere comprar para comprobar i hay a la venta 
+	 * Se introduce por url el nombre de la carta que se quiere comprar para comprobar si hay a la venta 
 	 *
 	 * @return response las cartas que se encuentran a la venta
 	 */
