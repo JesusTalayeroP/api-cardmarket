@@ -27,23 +27,20 @@ class EnsureTokenIsAdmin
         $headers = getallheaders();
 
         if(isset($headers['api_token'])){
+            if($headers['api_token'] != ""){
 
-            $decoded = JWT::decode($headers['api_token'], $key, array('HS256')); 
+                $decoded = JWT::decode($headers['api_token'], $key, array('HS256')); 
 
                 if($decoded){  
-                
-                // Comprobar si su rol es admin
-                if($decoded->role == 'admin'){
-                    return $next($request);
-                // Si no, enviar un error 403    
                     
-                }else abort(403, "no authorized");
-            }else abort(403, "Token incorrecto");
+                    // Comprobar si su rol es admin
+                    if($decoded->role == 'admin'){
+                        return $next($request);
+                    // Si no, enviar un error 403    
+                        
+                    }else abort(403, "no authorized");
+                }else abort(403, "Token incorrecto");
+            }else abort(403, "El token está vacío");   
         }else abort(403, "No hay token");
-        
-
-        
-
-        
     }
 }
