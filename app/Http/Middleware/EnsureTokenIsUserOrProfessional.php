@@ -25,17 +25,22 @@ class EnsureTokenIsUserOrProfessional
 
         $headers = getallheaders();
 
-        $decoded = JWT::decode($headers['api_token'], $key, array('HS256')); 
+        if(isset($headers['api_token'])){
 
-        if($decoded){  
-            
-            // Comprobar si su rol es admin
-            if($decoded->role == 'user' || $decoded->role == 'professional'){
-                return $next($request);
-            // Si no, enviar un error 403    
+            $decoded = JWT::decode($headers['api_token'], $key, array('HS256')); 
+
+            if($decoded){  
                 
-            }else abort(403, "no authorized");
-        }else abort(403, "Token incorrecto");
+                // Comprobar si su rol es admin
+                if($decoded->role == 'user' || $decoded->role == 'professional'){
+                    return $next($request);
+                // Si no, enviar un error 403    
+                    
+                }else abort(403, "no authorized");
+            }else abort(403, "Token incorrecto");
+        }else abort(403, "No hay token");
+
+        
 
         
     }
