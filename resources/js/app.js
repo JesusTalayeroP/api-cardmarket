@@ -1,6 +1,6 @@
-//require('./bootstrap');
+require('./bootstrap');
 	
-var formulario = document.getElementById('formulario');
+/*var formulario = document.getElementById('formulario');
 
 formulario.addEventListener('submit', function(e){
 
@@ -21,4 +21,4 @@ fetch('post.php',{
 	.then( res => res.jsonData())
 	.then(da)
 	
-});
+});*/

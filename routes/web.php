@@ -17,4 +17,38 @@ Route::get('/', function () {
     return view('index');
 });
 
-//Route::post();
+Route::get('/menu', function (){
+	return view('menu');
+});
+
+Route::post('/signup', function(){
+	return view('signup');
+});
+
+Route::post('/create_admin/{id}', function(){
+	return view('create_admin');
+});
+
+Route::post('/create_card', function(){
+	return view('create_card');
+});
+
+Route::post('/update_card{id}', function(){
+	return view('update_card');
+});
+
+Route::post('/add_card', function(){
+	return view('add_card');
+});
+
+Route::post('/create_collection', function(){
+	return view('create_collection');
+});
+
+Route::post('/update_collection/{id}', function(){
+	return view('update_collection');
+});
+
+Route::post('/search_card/{card_name}', function(){
+	return view('search_card');
+});
