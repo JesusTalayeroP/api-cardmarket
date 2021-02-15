@@ -68,7 +68,7 @@
 
 		<p>Contraseña</p>
 		<input type="password" name="password" required id="password">
-		
+
 		<br>
 
 		<input type="submit" value="Iniciar sesión" id="login">
@@ -91,7 +91,7 @@
     			
     			var splitted = data.split(" ");
     			var api_token = splitted[2];
-    			window.localStorage.setItem("api_token", api_token);
+    			localStorage.setItem("api_token", api_token);
 
     			if (splitted[0] == "OK.") {
     				window.location.href = "http://localhost/api-cardmarket/public"

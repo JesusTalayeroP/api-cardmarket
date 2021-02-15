@@ -67,14 +67,12 @@ session_start();
 		</ul>
 	</div>
 
-	<button onclick="getApiToken()">Mostrar Token</button>
-
-<h4>Si no tienes cuenta de administrador, puedes buscar las cartas registradas en la base de datos</h4>
+<p>Si no tienes cuenta de administrador, puedes buscar las cartas registradas en la base de datos</p>
 	
 
 <script>
 	function getApiToken(){
-		var api_token = window.localStorage.getItem(api_token);
+		var api_token = localStorage.getItem('api_token');
 		document.body.innerHTML += '<h2> Tu rol es: ' + api_token + '</h2>';
 	}
 </script>
