@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 
 ?>
@@ -15,7 +16,7 @@
 <body>
 
 	<h1>Bienvenido a la API de Card Market</h1>
-	<h2>Debes iniciar sesión para loguear</h2>
+	<h2>Debes iniciar sesión para continuar</h2>
 
 	<form id="formulario">
 		<p>Nombre de usuario</p>
@@ -38,13 +39,19 @@
 		    //console.log($username);
 		    //console.log($password);
 
-		    $.post("http://localhost:8888/api-cardmarket/public/api/users/login", JSON.stringify(user),
+		    $.post("http://localhost/api-cardmarket/public/api/users/login", JSON.stringify(user),
 
 		    function(data, status){
-    			alert("Data: " + data + "\nStatus: " + status);
+    			
     			var splitted = data.split(" ");
-    			var token = splitted[2];
-    			console.log(token);
+    			var api_token = splitted[2];
+    			localStorage[api_token] = api_token;
+    			
+    			if (splitted[0] == "OK.") {
+    				window.location.href = "http://localhost/api-cardmarket/public/main"
+    			}else{
+    				alert("Data: " + data + "\nStatus: " + status);
+    			}
   			}); 
 		});
       </script>

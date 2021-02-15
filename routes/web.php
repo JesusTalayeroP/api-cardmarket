@@ -17,8 +17,8 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/menu', function (){
-	return view('menu');
+Route::get('/main', function (){
+	return view('main');
 });
 
 Route::post('/signup', function(){
@@ -49,6 +49,6 @@ Route::post('/update_collection/{id}', function(){
 	return view('update_collection');
 });
 
-Route::post('/search_card/{card_name}', function(){
+Route::get('/search_card/{card_name}', function(){
 	return view('search_card');
 });
