@@ -9,6 +9,8 @@
 <head>
 	<title>main page</title>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	<style>
 		*{
 			max-width: 1200px;
@@ -52,15 +54,13 @@
 
 	<div id="bar_menu">
 		<ul>
-			<li><a href="http://localhost/api-cardmarket/public/main">Main page</a></li>
+			<li><a href="http://localhost/api-cardmarket/public">Main page</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/signup">SignUp</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/login">LogIn</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_admin">Create Admin</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_card">Create card</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/update_card">Update card</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/add_card">Add Card to collection</a></li>
-			<li><a href="http://localhost/api-cardmarket/public/create_collection">Create collection</a></li>
-			<li><a href="http://localhost/api-cardmarket/public/update_collection">Update collection</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/search_card">Search card</a></li>
 		</ul>
 	</div>

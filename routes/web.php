@@ -21,32 +21,28 @@ Route::get('/main', function (){
 	return view('main');
 });
 
-Route::post('/signup', function(){
+Route::get('/login', function (){
+	return view('login');
+});
+
+Route::any('/signup', function(){
 	return view('signup');
 });
 
-Route::post('/create_admin/{id}', function(){
+Route::any('/create_admin/{id}', function(){
 	return view('create_admin');
 });
 
-Route::post('/create_card', function(){
+Route::any('/create_card', function(){
 	return view('create_card');
 });
 
-Route::post('/update_card{id}', function(){
+Route::any('/update_card{id}', function(){
 	return view('update_card');
 });
 
-Route::post('/add_card', function(){
+Route::any('/add_card', function(){
 	return view('add_card');
-});
-
-Route::post('/create_collection', function(){
-	return view('create_collection');
-});
-
-Route::post('/update_collection/{id}', function(){
-	return view('update_collection');
 });
 
 Route::get('/search_card/{card_name}', function(){
