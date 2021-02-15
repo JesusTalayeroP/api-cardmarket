@@ -42,7 +42,9 @@
 
 		    function(data, status){
     			alert("Data: " + data + "\nStatus: " + status);
-    			console.log(data);
+    			var splitted = data.split(" ");
+    			var token = splitted[2];
+    			console.log(token);
   			}); 
 		});
       </script>
