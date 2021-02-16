@@ -11,45 +11,12 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-	<style>
-		*{
-			max-width: 1200px;
-			margin-left: 0px !important
-		}
-		
-		#bar_menu{
-			background-color: gray;
-			height: 34px
-		}
-		ul{
-			
-			display: inline;
-			list-style-type: none;
-  			margin: 0px;
-  			padding: 0px;
-
-		}
-		li{
-			float: left;
-		}
-		a{
-			display: block;
-  			padding: 8px;
-			text-decoration: none;
-			color: orange;
-		}
-
-		a:hover{
-			background-color: lavender;
-		}
-
-
-
-	</style>
+	<link rel="stylesheet" href="http://localhost:8888/api-cardmarket/resources/css/app.css">
+	
 </head>
 <body>
-	<h1>Has logueado correctamente</h1>
-
+	
+	<h1>Card Market Web Client</h1>
 	
 
 	<div id="bar_menu">
@@ -65,7 +32,9 @@
 		</ul>
 	</div>
 
-	<input type="button" onclick="getApiToken()" value="mostrar token">
+	<h1>Has logueado correctamente</h1>
+
+	
 
 <script>
 	function getApiToken(){

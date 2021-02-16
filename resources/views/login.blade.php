@@ -8,51 +8,18 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-	<style>
-		*{
-			max-width: 1200px;
-			margin-left: 0px !important
-		}
-		
-		#bar_menu{
-			background-color: gray;
-			height: 34px
-		}
-		ul{
-			
-			display: inline;
-			list-style-type: none;
-  			margin: 0px;
-  			padding: 0px;
-
-		}
-		li{
-			float: left;
-		}
-		a{
-			display: block;
-  			padding: 8px;
-			text-decoration: none;
-			color: orange;
-		}
-
-		a:hover{
-			background-color: lavender;
-		}
-
-
-
-	</style>
+	<link rel="stylesheet" href="http://localhost:8888/api-cardmarket/resources/css/app.css">
+	
 </head>
 <body>
-	<h1>Bienvenido a la API de Card Market</h1>
-	<h2>Debes iniciar sesión para continuar</h2>
+	<h1>Card Market Web Client</h1>
+	
 
 	<div id="bar_menu">
 		<ul>
 			<li><a href="http://localhost/api-cardmarket/public">Main page</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/signup">SignUp</a></li>
-			<li><a href="http://localhost/api-cardmarket/public/login">LogIn</a></li>
+			<li class="selected"><a href="http://localhost/api-cardmarket/public/login">LogIn</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_admin">Create Admin</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_card">Create card</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/update_card">Update card</a></li>
@@ -61,8 +28,11 @@
 		</ul>
 	</div>
 
+	<h2>LogIn</h2>
+
 	<form id="formulario">
 		<br>
+
 		<p>Nombre de usuario</p>
 		<input type="name" name="username" required id="username">
 
