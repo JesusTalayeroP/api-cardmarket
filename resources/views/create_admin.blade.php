@@ -51,9 +51,12 @@
 				type: 'POST',
 				headers: {"api_token": localStorage.getItem('api_token')},
 				data: []	,
-				
-				function(data, status){
-    				alert("Data: " + data + "\nStatus: " + status);
+				success: function(data, status){
+					if(data == "OK"){
+						alert("Admin creado correctamente \nStatus: " + status);
+					} else {
+						alert("Data: " + data + "\nStatus: " + status);
+					}
     			}
   			})
 		});
