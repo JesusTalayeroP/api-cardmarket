@@ -12,12 +12,11 @@
 
 </head>
 <body>
-	<h1>Sign Up</h1>
 
 	<div id="bar_menu">
 		<ul>
 			<li><a href="http://localhost/api-cardmarket/public">Main page</a></li>
-			<li class="selected"><a href="http://localhost/api-cardmarket/public/signup">SignUp</a></li>
+			<li><a class="selected" href="http://localhost/api-cardmarket/public/signup">SignUp</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/login">LogIn</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_admin">Create Admin</a></li>
 			<li><a href="http://localhost/api-cardmarket/public/create_card">Create card</a></li>
@@ -27,13 +26,15 @@
 		</ul>
 	</div>
 
+	<h1>Sign Up</h1>
+
 	<form id="formulario">
 		<br>
 		<p>Email</p>
-		<input type="Email" name="email" required id="email">
+		<input type="text" name="email" required id="email">
 
 		<p>Nombre de usuario</p>
-		<input type="name" name="username" required id="username">
+		<input type="text" name="username" required id="username">
 
 		<p>Contraseña</p>
 		<input type="password" name="password" required id="password">
@@ -52,7 +53,7 @@
 
 		<br>
 
-		<input type="submit" value="Registrarse" id="signup">
+		<input class="button" type="submit" value="Registrarse" id="signup">
 
 	</form>
 

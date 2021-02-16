@@ -21,6 +21,7 @@ h2 {
 }
 p {
 	color: #B3B3B3;
+	font-size: 1.2rem;
 }
 
 #bar_menu{
@@ -65,7 +66,32 @@ a:active {
 .selected {
 	background-color: #aaa !important; 
 }
+
+form p{
+	padding-top: 20px
+}
+
 input[type=text]{
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: #B3B3B3;
+}
+
+input[type=password]{
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	color: #B3B3B3;
+}
+
+select{
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;
@@ -83,12 +109,14 @@ input[type=submit]{
 	  margin: 4px 2px;
 	  transition-duration: 0.4s;
 	  cursor: pointer;
+	  margin-top: 15px
 }
 
 .button{
 	background-color: #262626; 
     color: white; 
     border: 2px solid #008CBA;
+    margin-top: 15px
 }
 
 .button:hover{

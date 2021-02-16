@@ -17,10 +17,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/main', function (){
-	return view('main');
-});
-
 Route::get('/login', function (){
 	return view('login');
 });
@@ -37,7 +33,7 @@ Route::any('/create_card', function(){
 	return view('create_card');
 });
 
-Route::any('/update_card{id}', function(){
+Route::any('/update_card', function(){
 	return view('update_card');
 });
 
@@ -45,6 +41,6 @@ Route::any('/add_card', function(){
 	return view('add_card');
 });
 
-Route::get('/search_card/{card_name}', function(){
+Route::get('/search_card', function(){
 	return view('search_card');
 });

@@ -57,20 +57,6 @@
     			}
   			})
 		});
-
-		    /*$.post("http://localhost/api-cardmarket/public/api/users/create_admin/"+$id,
-		    function(data, status){
-    			
-    			var splitted = data.split(" ");
-    			var api_token = splitted[2];
-    			localStorage.setItem("api_token", api_token);
-
-    			if (splitted[0] == "OK.") {
-    				window.location.href = "http://localhost/api-cardmarket/public"
-    			}else{
-    				alert("Data: " + data + "\nStatus: " + status);
-    			}
-  			}); */
   			
       </script>
 
