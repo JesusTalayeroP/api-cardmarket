@@ -29,7 +29,7 @@ Route::any('/signup', function(){
 	return view('signup');
 });
 
-Route::any('/create_admin/{id}', function(){
+Route::any('/create_admin', function(){
 	return view('create_admin');
 });
 

@@ -27,7 +27,7 @@ session_start();
 				<li><a href="http://localhost/api-cardmarket/public/add_card">Add Card to collection</a></li>
 				<li><a href="http://localhost/api-cardmarket/public/search_card">Search card</a></li>
 			</ul>
-		</div>	
+	</div>	
 
 	<article>
 
