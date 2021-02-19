@@ -150,7 +150,6 @@ class CardController extends Controller
 					if($card){
 						// Actualizar elos datos de la carta
 						$card->description = (isset($data->description) ? $data->description : $card->description);
-
 						try{
 							// Guardar la carta actualizada en la base de datos
 							$card->save();

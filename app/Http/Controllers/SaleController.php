@@ -90,19 +90,30 @@ class SaleController extends Controller
 
     	//Si hay un json válido, crear la venta
     	if($data){
-    		$sale = new Sale();
-    		// Rellenar los datos de la venta
-    		$sale->quantity = $data->quantity;
-    		$sale->price = $data->price;
-    		$sale->card_collection_id = $data->card_id;
-    		$sale->user_id = $decoded->id;
+            if(!empty($data->quantity)){
+                if(!empty($data->price)){
+                    if(!empty($data->card_id)){
+                        $card = CardCollection::find($data->card_id);
+                        if($card){
+                            if($data->quantity > 0 && $data->price > 0){
+                                $sale = new Sale();
+                                // Rellenar los datos de la venta
+                                $sale->quantity = $data->quantity;
+                                $sale->price = $data->price;
+                                $sale->card_collection_id = $data->card_id;
+                                $sale->user_id = $decoded->id;
 
-			try{
-				$sale->save();
-				$response = "OK";
-			}catch(\Exception $e){
-				$response = $e->getMessage();
-			}
+                                try{
+                                    $sale->save();
+                                    $response = "OK";
+                                }catch(\Exception $e){
+                                    $response = $e->getMessage();
+                                }
+                            }else $response = "El precio de la carta y la cantidad de cartas a la venta tiene que ser mayor que 0";
+                        }else $response = "El id de la carta introducida no corresponde a ninguna carta existente en la base de datos";
+                    }else $response = "Sale incompleta, No card id";
+                }else $response = "Sale incompleta, No price";
+            }else $response = "Sale incompleta, No quantity";
     	} else $response = "No data";
     	// Enviar respuesta
     	return $response;
