@@ -29,7 +29,7 @@ class SaleController extends Controller
         $key = MyJWT::getKey();
         //Decodificar el token
         $headers = getallheaders();
-        $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+        //$decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
 
     	// Buscar todas las cartas que pertenecen a una collection
     	$cardsCollection = CardCollection::all();
@@ -37,14 +37,17 @@ class SaleController extends Controller
     	$response = [];
 		// Si hay cartas registradas
     	if($cardsCollection){
+            //echo("ha encontrado todas cartas que pertenecen a una colección \n");
     		// Recorrer cada una de las cartas para comprobar sus datos 
     		for ($i=0; $i < count($cardsCollection); $i++) { 
     			// Buscar la carta para acceder a sus datos
     			$card = Card::find($cardsCollection[$i]->card_id);
+                //echo("busca las cartas sin colección \n");
     			// Si el nombre de la carta coincide con el que busca el usuario
     			if(strcasecmp($card->name, $card_name) == 0){
     				// Buscamos la collection para acceder a sus datos
     				$collection = Collection::find($cardsCollection[$i]->collection_id);
+                    //echo("Busca la carta introducida por el usuario \n");
     				// Guardamos la carta para mostrarsela al usuario
     				$response [] = [
     				"id" => $cardsCollection[$i]->id,
@@ -58,6 +61,7 @@ class SaleController extends Controller
     	// Si no encuantra ninguna carta coincidente
     	if($response == []){
     		$response = "No se encontraron cartas con ese nombre";
+            //echo("no ha encontrado ninguna carta \n");
     	}
     	// Enviar la respuesta
     	return $response;
@@ -99,7 +103,7 @@ class SaleController extends Controller
 			}catch(\Exception $e){
 				$response = $e->getMessage();
 			}
-    	} else $response = "Datos incorrectos";
+    	} else $response = "No data";
     	// Enviar respuesta
     	return $response;
     }

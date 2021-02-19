@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 
 ?>
 
@@ -40,14 +38,6 @@ session_start();
 		<p>Si no tienes cuenta de administrador, puedes buscar las cartas registradas en la base de datos</p>
 
 	</article>
-	
-
-	<script>
-		function getApiToken(){
-			var api_token = localStorage.getItem('api_token');
-			document.body.innerHTML += '<h2> Tu rol es: ' + api_token + '</h2>';
-		}
-	</script>
 
 
 </body>

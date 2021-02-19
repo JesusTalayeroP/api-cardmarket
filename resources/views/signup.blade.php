@@ -72,10 +72,6 @@
 		    $role = document.getElementById("role").value;
 		    
 		    var user = {username: $username, email: $email, password: $password, role: $role}
-		    //console.log($username);
-		    //console.log($password);
-		    //console.log($email);
-		    console.log($role);
 
 		    $.post("http://localhost/api-cardmarket/public/api/users/signup", JSON.stringify(user),
 

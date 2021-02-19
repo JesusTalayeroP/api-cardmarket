@@ -51,7 +51,7 @@ class UserController extends Controller
 			}else {
     			$response = "No puedes crear un usuario administrador";
     		}			
-    	} else $response = "Datos incorrectos";
+    	} else $response = "No data";
         //Enviar la respuesta
     	return $response;
     }
@@ -158,7 +158,7 @@ class UserController extends Controller
     		 try{
     			$user->save();
                 // Se envia la nueva contraseña al usuario
-				$response = "Tu nueva contraseña es: ".$new_password;
+				$response = "OK. Tu nueva contraseña es: ".$new_password;
 			}catch(\Exception $e){
 				$response = $e->getMessage();
 			}

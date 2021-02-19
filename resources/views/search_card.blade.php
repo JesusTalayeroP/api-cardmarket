@@ -57,29 +57,24 @@
 				headers: {"api_token": localStorage.getItem('api_token')},
 				success: function(data, status){
 					console.log(data);
-					//$( ".result" ).html( data );
-					//if (data) {
-						//for (var i = 0; i < data.length; i++) {
-						//	document.write(data.values());
-						//}
-    			
-    				//}else{
-    				//	alert("Data: " + data + "\nStatus: " + status);
-    				//}
-    				//document.body.innerHTML += '<h2> Tu rol es: ' + api_token + '</h2>';
-    				var table = '<table><tr><th>id</th><th>Card Name</th><th>Description</th><th>Collection</th></tr>';
 
-    				for (var i in data) {
+    				var table = '<table><tr><th>id</th><th>Card Name</th><th>Description</th><th>Collection</th></tr>';
+    				if(data === "No se encontraron cartas con ese nombre"){
+    					alert("Data: " + data + "\nStatus: " + status);
+    				}else {
+    					for (var i in data) {
 					    table += '<tr>';
 
-					    for (var j in data[i]) {
-      						table += '<td>' + data[i][j] + '</td>';
-     					}
+						    for (var j in data[i]) {
+	      						table += '<td>' + data[i][j] + '</td>';
+	     					}
 
      					table += '</tr>';
-					}
+						}
 					table += '</table>';
 					document.body.innerHTML += table;
+    				}
+    				
     			}
   			})
   			

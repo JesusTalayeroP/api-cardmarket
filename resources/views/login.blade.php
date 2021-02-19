@@ -50,8 +50,6 @@
 		    $username = $('#username').val();
 		    $password = $('#password').val();
 		    var user = {password: $password, username: $username}
-		    //console.log($username);
-		    //console.log($password);
 
 		    $.post("http://localhost/api-cardmarket/public/api/users/login", JSON.stringify(user),
 

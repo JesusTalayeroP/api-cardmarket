@@ -50,7 +50,7 @@
 				url: $url,
 				type: 'POST',
 				headers: {"api_token": localStorage.getItem('api_token')},
-				data: []	,
+				data: [],
 				success: function(data, status){
 					if(data == "OK"){
 						alert("Admin creado correctamente \nStatus: " + status);
