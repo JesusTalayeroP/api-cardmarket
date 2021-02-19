@@ -29,28 +29,39 @@ class UserController extends Controller
     	$data = json_decode($data);
         //Si hay un json válido, crear el usuario   
     	if($data){
-    		$user = new User();
-            //Rellenar los campos
-    		$user->username = $data->username;
-    		$user->email = $data->email;
-    		$user->password = Hash::make($data->password);
-            // Si el rol es user o professional se completa el registro
-    		if($data->role === "user" || $data->role === "professional"){
-    			$user->role = $data->role;
-    			try{
-    				$user->save();
-					$response = "OK";
-				}catch(\Exception $e){
-					$response = $e->getMessage();
-    			}
-                // Si es el primer usuario creado se le da el rol de admin
-                if($user->id == 1){
-                    $user->role = "admin";
-                    $user->save();
-                }
-			}else {
-    			$response = "No puedes crear un usuario administrador";
-    		}			
+            if(!empty($data->username)){
+                if(!empty($data->email)){
+                    if(!empty($data->password)){
+                        if(!empty($data->role)){
+                            $old_user = User::where('username', $data->username)->get()->first();
+                            if(!$old_user){
+                                $user = new User();
+                                //Rellenar los campos
+                                $user->username = $data->username;
+                                $user->email = $data->email;
+                                $user->password = Hash::make($data->password);
+                                // Si el rol es user o professional se completa el registro
+                                if($data->role === "user" || $data->role === "professional"){
+                                    $user->role = $data->role;
+                                    try{
+                                        $user->save();
+                                        $response = "OK";
+                                    }catch(\Exception $e){
+                                        $response = $e->getMessage();
+                                    }
+                                    // Si es el primer usuario creado se le da el rol de admin
+                                    if($user->id == 1){
+                                        $user->role = "admin";
+                                        $user->save();
+                                    }
+                                }else {
+                                    $response = "No puedes crear un usuario administrador";
+                                }
+                            }else $response = "User already exists";
+                        }else $response = "Usuario incompleto, No role";  
+                    }else $response = "Usuario incompleto, No password";
+                }else $response = "Usuario incompleto, No email";
+            }else $response = "Usuario incompleto, No username";				
     	} else $response = "No data";
         //Enviar la respuesta
     	return $response;
@@ -72,21 +83,26 @@ class UserController extends Controller
         //Decodificar el token
         $headers = getallheaders();
         $decoded = JWT::decode($headers['api_token'], $key, array('HS256'));
+        if (is_numeric($id)){
+             // Buscar el usuario por id
+            $user = User::find($id);
+            // Si lo encuentra
+            if($user){
+                if($user->role != "admin"){
+                    // Cambiamos su role a admin
+                    $user->role = 'admin';
+                    try{
+                        $user->save();
+                        $response = "OK";
+                    }catch(\Exception $e){
+                        $response = $e->getMessage();
+                    }  
+                }else $response = "El usuario ya es administrador";          
+            } else $response = "Usuario no encontrado";
+        }else $response = "El id deben ser números";
 
-        // Buscar el usuario por id
-    	$user = User::find($id);
-        // Si lo encuentra
-    	if($user){
-            // Cambiamos su role a admin
-    		$user->role = 'admin';
-
-    		try{
-    			$user->save();
-				$response = "OK";
-			}catch(\Exception $e){
-				$response = $e->getMessage();
-			}			
-    	} else $response = "Usuario no encontrado";
+       
+        
         // Enviar la respuesta
     	return $response;
     }
@@ -106,27 +122,32 @@ class UserController extends Controller
     	$data = $request->getContent();
         //Decodificar el json
     	$data = json_decode($data);
-        // Buscar el usuario por su username
-    	$user = User::where('username', $data->username)->get()->first();
 
-        $payload = MyJWT::generatePayload($user);
-        $key = MyJWT::getKey();
+        if($data){
+            if(!empty($data->username)){
+                if(!empty($data->password)){
+                    // Buscar el usuario por su username
+                    $user = User::where('username', $data->username)->get()->first();
+                    // Si existe y la contraseña coincide
+                    if($user){
+                        $payload = MyJWT::generatePayload($user);
+                        $key = MyJWT::getKey();
+                        $jwt = JWT::encode($payload, $key);
+                        if(Hash::check($data->password, $user->password)){
+                            // Crear un token aleatorio y guardarlo
+                            $user->api_token = $jwt;
+                            try{
+                                $user->save();
+                                $response = "OK. Token: ".$jwt;
+                            }catch(\Exception $e){
+                                $response = $e->getMessage();
+                            }
+                        }else $response = "La contraseña es incorrecta";
+                    }else $response = "El usuario no existe";
+                }else $response = "Usuario incompleto, No password";
+            }else $response = "Usuario incompleto, No username";
+        } else $response = "No data";
 
-        $jwt = JWT::encode($payload, $key);
-
-        // Si existe y la contraseña coincide
-    	if($user && Hash::check($data->password, $user->password)){
-            // Crear un token aleatorio y guardarlo
-			$user->api_token = $jwt;
-
-			try{
-    			$user->save();
-				$response = "OK. Token: ".$jwt;
-			}catch(\Exception $e){
-				$response = $e->getMessage();
-			}
-    		
-    	}else $response = "El usuario o la contraseña son incorrectos";
         // Enviar la respuesta
     	return $response;
 	}
@@ -146,23 +167,29 @@ class UserController extends Controller
     	$data = $request->getContent();
         //Decodificar el json
     	$data = json_decode($data);
-        // Buscar el usuario por su email
-    	$user = User::where('email', $data->email)->get()->first();
-        // Si se encuentra el usuario
-    	if($user){
-            // Generar una nueva contraseña aleatoria
-    		$new_password = Str::random(15);
-            // Guardar la contraseña en la bbdd
-    		$user->password = Hash::make($new_password);
 
-    		 try{
-    			$user->save();
-                // Se envia la nueva contraseña al usuario
-				$response = "OK. Tu nueva contraseña es: ".$new_password;
-			}catch(\Exception $e){
-				$response = $e->getMessage();
-			}
-    	}else $response = "El usuario introducido no existe";
+        if($data){
+            if(!empty($data->email)){
+                // Buscar el usuario por su email
+                $user = User::where('email', $data->email)->get()->first();
+                // Si se encuentra el usuario
+                if($user){
+                    // Generar una nueva contraseña aleatoria
+                    $new_password = Str::random(15);
+                    // Guardar la contraseña en la bbdd
+                    $user->password = Hash::make($new_password);
+
+                     try{
+                        $user->save();
+                        // Se envia la nueva contraseña al usuario
+                        $response = "OK. Tu nueva contraseña es: ".$new_password;
+                    }catch(\Exception $e){
+                        $response = $e->getMessage();
+                    }
+                }else $response = "El usuario introducido no existe";
+            }else $response = "Es necesario introducir el email";
+        }else $response = "No data";
+        
         // Enviar la respuesta
     	return $response;
 	}
